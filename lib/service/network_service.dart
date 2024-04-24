@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:employee_app/model/employee_model.dart';
 import 'package:http/http.dart';
 import 'package:logger/logger.dart';
 
@@ -59,10 +60,17 @@ class NetworkService {
     return map;
   }
 
-// static List<NewsModel> parsingResponse({required String response}) {
-//   dynamic json = jsonDecode(response);
-//   var data =
-//   List<NewsModel>.from(json.map((mp) => NewsModel.fromMap(map: mp)));
-//   return data;
-// }
+  static List<Employee> parsingResponse({required String response}) {
+    dynamic json = jsonDecode(response);
+    List<Employee> employees = List<Employee>.from(
+        json['data'].map((employee) => Employee.fromMap(employee)));
+    return employees;
+  }
+
+  static Employee parsingResponseOne({required String response}) {
+    dynamic json = jsonDecode(response);
+    Map<String, dynamic> employeeMap = json['data'];
+    Employee employee = Employee.fromMap(employeeMap);
+    return employee;
+  }
 }
